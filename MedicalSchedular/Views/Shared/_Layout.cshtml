@@ -1,0 +1,330 @@
+﻿ <!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Patient Appointment Scheduler System - PHP</title>
+	<link rel="icon" href="~/uploads/1630631400_clinic-logo.png" />
+	<!-- Google Font: Source Sans Pro -->
+	<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback"> -->
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+	<!-- Ionicons -->
+	<!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
+	<!-- Tempusdominus Bootstrap 4 -->
+	<link rel="stylesheet" href="~/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+	  <!-- DataTables -->
+  <link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="~/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="~/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+   <!-- Select2 -->
+  <link rel="stylesheet" href="~/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="~/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+	<!-- iCheck -->
+	<link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+	<!-- JQVMap -->
+	<link rel="stylesheet" href="~/plugins/jqvmap/jqvmap.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="~/dist/css/adminlte.css">
+	<link rel="stylesheet" href="~/dist/css/custom.css">
+	<link rel="stylesheet" href="~/assets/css/styles.css">
+	<!-- overlayScrollbars -->
+	<link rel="stylesheet" href="~/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+	<!-- Daterange picker -->
+	<link rel="stylesheet" href="~/plugins/daterangepicker/daterangepicker.css">
+	<!-- summernote -->
+	<link rel="stylesheet" href="~/plugins/summernote/summernote-bs4.min.css">
+	 <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="~/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+	<style type="text/css">/* Chart.js */
+	  @@keyframes chartjs-render-animation{from{opacity:.99}to{opacity:1}}.chartjs-render-monitor{animation:chartjs-render-animation 1ms}.chartjs-size-monitor,.chartjs-size-monitor-expand,.chartjs-size-monitor-shrink{position:absolute;direction:ltr;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1}.chartjs-size-monitor-expand>div{position:absolute;width:1000000px;height:1000000px;left:0;top:0}.chartjs-size-monitor-shrink>div{position:absolute;width:200%;height:200%;left:0;top:0}
+	</style>
+  <!-- fullCalendar -->
+  <link rel="stylesheet" href="~/plugins/fullcalendar/main.css">
+	 <!-- jQuery -->
+	<script src="~/plugins/jquery/jquery.min.js"></script>
+	<!-- jQuery UI 1.11.4 -->
+	<script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
+	<!-- SweetAlert2 -->
+	<script src="~/plugins/sweetalert2/sweetalert2.min.js"></script>
+	<!-- Toastr -->
+	<script src="~/plugins/toastr/toastr.min.js"></script>
+	<script>
+		var _base_url_ = '~/';
+	</script>
+	
+	<!-- fullCalendar 2.2.5 -->
+  <script src="~/plugins/moment/moment.min.js"></script>
+  <script src="~/plugins/fullcalendar/main.js"></script>
+  
+  <script src="~/dist/js/script.js"></script>
+	<script src="~/assets/js/scripts.js"></script>
+	<style>
+	#main-header{
+		position:relative;
+		background: rgb(0,0,0)!important;
+		background: radial-gradient(circle, rgba(0,0,0,0.48503151260504207) 22%, rgba(0,0,0,0.39539565826330536) 49%, rgba(0,212,255,0) 100%)!important;
+	}
+	#main-header:before{
+		content:"";
+		position:absolute;
+		top:0;
+		left:0;
+		width:100%;
+		height:100%;
+		background-image:url(uploads/1630631400_clinic-cover.jpg);
+		background-repeat: no-repeat;
+		background-size: cover;
+		filter: drop-shadow(0px 7px 6px black);
+		z-index:-1;
+	}
+
+ </style>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container px-4 px-lg-5 ">
+				<button class="navbar-toggler btn btn-sm" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+				<a class="navbar-brand" href="./">
+				<img src="~/uploads/1630631400_clinic-logo.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+				PASS-PHP                </a>
+				<span> <a asp-controller="admin" asp-action="login">Login</a></span>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+						<!-- <li class="nav-item"><a class="nav-link" aria-current="page" href="./">Home</a></li> -->
+					</ul>
+					<div class="d-flex align-items-center">
+					  
+					</div>
+				</div>
+			</div>
+		</nav>
+<script>
+  $(function(){
+	$('#login-btn').click(function(){
+	  uni_modal("","login.php")
+	})
+	$('#navbarResponsive').on('show.bs.collapse', function () {
+		$('#mainNav').addClass('navbar-shrink')
+	})
+	$('#navbarResponsive').on('hidden.bs.collapse', function () {
+		if($('body').offset.top == 0)
+		  $('#mainNav').removeClass('navbar-shrink')
+	})
+  })
+
+  $('#search-form').submit(function(e){
+	e.preventDefault()
+	 var sTxt = $('[name="search"]').val()
+	 if(sTxt != '')
+	  location.href = './?p=products&search='+sTxt;
+  })
+</script> <!-- Header-->
+ <header class="bg-dark py-5" id="main-header">
+	<div class="container px-4 px-lg-5 my-5">
+		<div class="text-center text-white">
+			<h1 class="display-4 fw-bolder">Patient Appointment Scheduler System - PHP</h1>
+			<p class="lead fw-normal text-white-50 mb-0">
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+						Schedule Appointment Now
+					</button>
+			</p>
+		</div>
+	</div>
+</header>
+<!-- Section-->
+	@RenderBody()
+
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+			<div class="container">
+			  <p class="m-0 text-center text-white">Copyright &copy; PASS-PHP 2021</p>
+			  <p class="m-0 text-center text-white">Developed By: <a href="mailto:">oretnom23</a></p>
+		  </div>
+		</footer>
+
+   
+	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+	<script>
+	  $.widget.bridge('uibutton', $.ui.button)
+	</script>
+	<!-- Bootstrap 4 -->
+	<script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- ChartJS -->
+	<script src="~/plugins/chart.js/Chart.min.js"></script>
+	<!-- Sparkline -->
+	<script src="~/plugins/sparklines/sparkline.js"></script>
+	<!-- Select2 -->
+	<script src="~/plugins/select2/js/select2.full.min.js"></script>
+	<!-- JQVMap -->
+	<script src="~/plugins/jqvmap/jquery.vmap.min.js"></script>
+	<script src="~/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+	<!-- jQuery Knob Chart -->
+	<script src="~/plugins/jquery-knob/jquery.knob.min.js"></script>
+	<!-- daterangepicker -->
+	<script src="~/plugins/moment/moment.min.js"></script>
+	<script src="~/plugins/daterangepicker/daterangepicker.js"></script>
+	<!-- Tempusdominus Bootstrap 4 -->
+	<script src="~/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+	<!-- Summernote -->
+	<script src="~/plugins/summernote/summernote-bs4.min.js"></script>
+	<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+	<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+	<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+	<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+	<!-- overlayScrollbars -->
+	<!-- <script src="~/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script> -->
+	<!-- AdminLTE App -->
+	<script src="~/dist/js/adminlte.js"></script>
+
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		
+		<div class="modal-dialog rounded-0 modal-md modal-dialog-centered mid-large" role="document">
+			<div class="modal-content  rounded-0">
+				<div class="modal-header">
+					<h5 class="modal-title">Appointment Form</h5>
+				</div>
+				<div class="modal-body">
+					<style>
+						#uni_modal .modal-content > .modal-footer {
+							display: none;
+						}
+
+						#uni_modal .modal-body {
+							padding-top: 0 !important;
+						}
+					</style>
+					<div class="container-fluid">
+						<form id="appointment_form" class="py-2">
+							<div class="row" id="appointment">
+								<div class="col-6" id="frm-field">
+									<input type="hidden" name="id" value="">
+									<input type="hidden" name="patient_id" value="">
+									<div class="form-group">
+										<label for="name" class="control-label">Fullname</label>
+										<input type="text" class="form-control" name="name" value="" required="">
+									</div>
+									<div class="form-group">
+										<label for="email" class="control-label">Email</label>
+										<input type="email" class="form-control" name="email" value="" required="">
+									</div>
+									<div class="form-group">
+										<label for="contact" class="control-label">Contact</label>
+										<input type="text" class="form-control" name="contact" value="" required="">
+									</div>
+									<div class="form-group">
+										<label for="gender" class="control-label">Gender</label>
+										<select type="text" class="custom-select" name="gender" required="">
+											<option>Male</option>
+											<option>Female</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="dob" class="control-label">Date of Birth</label>
+										<input type="date" class="form-control" name="dob" value="" required="">
+									</div>
+								</div>
+								<div class="col-6">
+
+									<div class="form-group">
+										<label for="address" class="control-label">Address</label>
+										<textarea class="form-control" name="address" rows="3" required=""></textarea>
+									</div>
+
+									<div class="form-group">
+										<label for="ailment" class="control-label">Ailment</label>
+										<textarea class="form-control" name="ailment" rows="3" required=""></textarea>
+									</div>
+
+									<div class="form-group">
+										<label for="date_sched" class="control-label">Appointment</label>
+										<input type="datetime-local" class="form-control" name="date_sched" value="" required="">
+									</div>
+									<div class="form-group">
+										<label for="status" class="control-label">Status</label>
+										<select name="status" id="status" class="custom custom-select">
+											<option value="0">Pending</option>
+											<option value="1">Confirmed</option>
+											<option value="2">Cancelled</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group d-flex justify-content-end w-100 form-group">
+									<button class="btn-primary btn">Submit Appointment</button>
+									<button class="btn-light btn ml-2" type="button" data-dismiss="modal">Cancel</button>
+								</div>
+
+							</div>
+						</form>
+					</div>
+					<script>
+						$(function () {
+							$('#appointment_form').submit(function (e) {
+								e.preventDefault();
+								var _this = $(this)
+								$('.err-msg').remove();
+								start_loader();
+								$.ajax({
+									url: _base_url_ + "classes/Master.php?f=save_appointment",
+									data: new FormData($(this)[0]),
+									cache: false,
+									contentType: false,
+									processData: false,
+									method: 'POST',
+									type: 'POST',
+									dataType: 'json',
+									error: err => {
+										console.log(err)
+										alert_toast("An error occured", 'error');
+										end_loader();
+									},
+									success: function (resp) {
+										if (typeof resp == 'object' && resp.status == 'success') {
+											location.reload()
+										} else if (resp.status == 'failed' && !!resp.msg) {
+											var el = $('<div>')
+											el.addClass("alert alert-danger err-msg").text(resp.msg)
+											_this.prepend(el)
+											el.show('slow')
+											$("html, body").animate({ scrollTop: $('#uni_modal').offset().top }, "fast");
+										} else {
+											alert_toast("An error occured", 'error');
+											console.log(resp)
+										}
+										end_loader();
+									}
+								})
+							})
+							$('#uni_modal').on('hidden.bs.modal', function (e) {
+								if ($('#appointment_form').length <= 0)
+									location.reload()
+							})
+						})
+					</script>
+
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+  <script>
+		start_loader();
+		$(function(){
+		  end_loader()
+		})
+	</script>
+	@await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>
+
+
+
+<!-- Button trigger modal -->
