@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Patient Appointment Scheduler System - PHP</title>
+    <title>Patient Appointment Scheduler System </title>
     <link rel="icon" href="~/uploads/1630631400_clinic-logo.png" />
     <!-- Google Font: Source Sans Pro -->
     <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback"> -->
@@ -125,7 +125,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="~/" class="nav-link">Patient Appointment Scheduler System - PHP - Admin</a>
+                    <a href="~/" class="nav-link">Patient Appointment Scheduler System - Admin</a>
                 </li>
             </ul>
             <!-- Right navbar links -->
@@ -182,7 +182,7 @@
             <!-- Brand Logo -->
             <a href="~/admin" class="brand-link bg-primary text-sm">
                 <img src="~/uploads/1630631400_clinic-logo.png" alt="Store Logo" class="brand-image  elevation-3" style="opacity: .8;width: 2.5rem;height: 2.5rem;max-height: unset">
-                <span class="brand-text font-weight-light">PASS-PHP</span>
+                <span class="brand-text font-weight-light">PASS - </span>
             </a>
             <!-- Sidebar -->
             <div class="sidebar os-host os-theme-light os-host-overflow os-host-overflow-y os-host-resize-disabled os-host-transition os-host-scrollbar-horizontal-hidden">
@@ -210,7 +210,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a asp-action="appointments" class="nav-link nav-appointments">
+                                        <a asp-controller="admin" asp-action="appointment" class="nav-link nav-appointments">
                                             <i class="nav-icon fas fa-calendar"></i>
                                             <p>
                                                 Appointment List
@@ -219,7 +219,7 @@
                                     </li>
 
                                     <li class="nav-item dropdown">
-                                        <a asp-action="schedule_settings" class="nav-link nav-schedule_settings">
+                                        <a  asp-controller="admin" asp-action="schedule" class="nav-link nav-schedule_settings">
                                             <i class="nav-icon fas fa-calendar-day"></i>
                                             <p>
                                                 Schedule Settings
@@ -227,7 +227,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a asp-action="user_list" class="nav-link nav-user_list">
+                                        <a asp-controller="admin" asp-action="user" class="nav-link nav-user_list">
                                             <i class="nav-icon fas fa-users"></i>
                                             <p>
                                                 User List
@@ -235,7 +235,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a asp-action="system_info" class="nav-link nav-system_info">
+                                        <a  asp-controller="admin" asp-action="settings" class="nav-link nav-system_info">
                                             <i class="nav-icon fas fa-cogs"></i>
                                             <p>
                                                 Settings
@@ -406,7 +406,7 @@
             </strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
-                <b>PASS-PHP (by: <a href="mailto:" target="blank"></a> )</b> v1.0
+                <b>PASS- (by: <a href="mailto:" target="blank"></a> )</b> v1.0
             </div>
         </footer>
     </div>

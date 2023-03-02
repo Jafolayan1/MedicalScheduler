@@ -1,4 +1,137 @@
-﻿@page
-@model MedicalScheduler.Views.Admin.SettingsModel
-@{
+﻿@{
+    ViewData["Title"] = "Settings Page";
+    Layout = "_AdminLayout";
+
 }
+
+<!-- Main content -->
+<section class="content  text-dark">
+    <div class="container-fluid">
+
+        <style>
+            img#cimg {
+                height: 15vh;
+                width: 15vh;
+                object-fit: cover;
+                border-radius: 100% 100%;
+            }
+
+            img#cimg2 {
+                height: 50vh;
+                width: 100%;
+                object-fit: contain;
+                /* border-radius: 100% 100%; */
+            }
+        </style>
+        <div class="col-lg-12">
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <h5 class="card-title">System Information</h5>
+                    <!-- <div class="card-tools">
+                        <a class="btn btn-block btn-sm btn-default btn-flat border-primary new_department" href="javascript:void(0)"><i class="fa fa-plus"></i> Add New</a>
+                    </div> -->
+                </div>
+                <div class="card-body">
+                    <form action="" id="system-frm">
+                        <div id="msg" class="form-group"></div>
+                        <div class="form-group">
+                            <label for="name" class="control-label">System Name</label>
+                            <input type="text" class="form-control form-control-sm" name="name" id="name" value="Patient Appointment Scheduler System - PHP">
+                        </div>
+                        <div class="form-group">
+                            <label for="short_name" class="control-label">System Short Name</label>
+                            <input type="text" class="form-control form-control-sm" name="short_name" id="short_name" value="PASS-PHP">
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="control-label">About Us</label>
+                            <textarea name="about_us" id="" cols="30" rows="2" class="form-control summernote"><h1 style="text-align: center; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0px; line-height: 90px;"><span style="font-family: &quot;Arial Black&quot;;">About Us</span></h1><h4 style="margin: 10px 10px 5px; padding: 0px; line-height: 18px;"><br></h4><hr style="margin: 0px; padding: 0px; clear: both; border-top: 0px; height: 1px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: center;"><div id="Content" style="margin: 0px; padding: 0px; position: relative; font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: center;"><div id="bannerL" style="margin: 0px 0px 0px -160px; padding: 0px; position: sticky; top: 20px; width: 160px; height: 10px; float: left; text-align: right;"></div><div id="bannerR" style="margin: 0px -160px 0px 0px; padding: 0px; position: sticky; top: 20px; width: 160px; height: 10px; float: right; text-align: left;"></div><div class="boxed" style="margin: 10px 28.7969px; padding: 0px; clear: both;"><div id="lipsum" style="margin: 0px; padding: 0px; text-align: justify;"><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc enim felis, consequat id mauris sit amet, finibus tristique justo. Maecenas vel ligula eget tellus pulvinar vestibulum. Sed feugiat pharetra dolor sit amet tincidunt. Quisque dictum turpis eu ipsum euismod, quis suscipit neque iaculis. Nunc dignissim porttitor urna, vitae suscipit erat congue nec. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam faucibus pellentesque enim, eget faucibus leo mattis eu. In eleifend turpis tortor, vel accumsan est rhoncus imperdiet. Aenean laoreet diam metus.</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px;">Pellentesque pulvinar augue dui, eget egestas arcu tincidunt nec. Curabitur aliquet, nisl sit amet ullamcorper malesuada, neque quam lobortis ante, non rutrum dolor sem non purus. Maecenas sed vehicula libero, condimentum malesuada quam. Ut nec vehicula lorem. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam id diam quis lacus pretium facilisis eu molestie ligula. Mauris a ornare massa. Integer scelerisque, nisl at consectetur ornare, ipsum risus vehicula arcu, quis malesuada metus dui vel tellus. Vivamus euismod, erat pharetra cursus egestas, erat sem consequat eros, eu cursus justo mi sit amet nisi. Nullam sed magna metus. Duis elementum, metus a imperdiet faucibus, arcu libero consectetur quam, a convallis lacus lorem in nisl. Aliquam enim orci, blandit vel ligula ac, suscipit dictum dolor. Maecenas vitae tortor cursus, hendrerit lectus vel, ultricies ante. Suspendisse aliquam bibendum nisl, eu condimentum nibh congue a.</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px;">Fusce eu viverra tortor. Cras imperdiet gravida eros in imperdiet. Proin varius orci aliquet, laoreet tortor in, posuere magna. Nullam sem ex, gravida eu eros vel, rutrum porta leo. Donec sit amet sapien fermentum, tempus lectus id, pretium ipsum. Etiam dignissim nunc eget congue rutrum. Morbi lorem augue, sollicitudin ut massa a, imperdiet semper lectus. Proin tellus ante, ornare vitae ligula quis, interdum porta magna. Ut lorem elit, laoreet vitae ex eget, blandit pulvinar mauris. Cras non elementum enim. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p></div></div></div></textarea>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="" class="control-label">Privacy Policy</label>
+                             <textarea name="privacy_policy" id="" cols="30" rows="2" class="form-control summernote"></textarea>
+                        </div> -->
+
+                        <div class="form-group">
+                            <label for="" class="control-label">System Logo</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input rounded-circle" id="customFile" name="img" onchange="displayImg(this,$(this))">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                        <div class="form-group d-flex justify-content-center">
+                            <img src="~/scheduler/uploads/1630631400_clinic-logo.png" alt="" id="cimg" class="img-fluid img-thumbnail">
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="control-label">Website Cover</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input rounded-circle" id="customFile" name="cover" onchange="displayImg2(this,$(this))">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                        <div class="form-group d-flex justify-content-center">
+                            <img src="~/scheduler/uploads/1630631400_clinic-cover.jpg" alt="" id="cimg2" class="img-fluid img-thumbnail">
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <button class="btn btn-sm btn-primary" form="system-frm">Update</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script>
+            function displayImg(input, _this) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#cimg').attr('src', e.target.result);
+                        _this.siblings('.custom-file-label').html(input.files[0].name)
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            function displayImg2(input, _this) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        _this.siblings('.custom-file-label').html(input.files[0].name)
+                        $('#cimg2').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            function displayImg3(input, _this) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        _this.siblings('.custom-file-label').html(input.files[0].name)
+                        $('#cimg3').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            $(document).ready(function () {
+                $('.summernote').summernote({
+                    height: 200,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                        ['fontname', ['fontname']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['para', ['ol', 'ul', 'paragraph', 'height']],
+                        ['table', ['table']],
+                        ['view', ['undo', 'redo', 'fullscreen', 'codeview', 'help']]
+                    ]
+                })
+            })
+        </script>
+    </div>
+</section>
