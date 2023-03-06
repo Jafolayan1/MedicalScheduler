@@ -129,7 +129,7 @@
                 <img src="~/uploads/1630631400_clinic-logo.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
                 PASS
             </a>
-            <span> <a asp-controller="admin" asp-action="login">Login</a></span>
+            @*<span> <a asp-controller="admin" asp-action="login">Login</a></span>*@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -148,7 +148,7 @@
     <!-- Footer-->
     <footer class="py-5 bg-dark">
         <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; PASS- @DateTime.Now</p>
+            <p class="m-0 text-center text-white">Copyright &copy; PASS- @DateTime.Now.Year</p>
             <p class="m-0 text-center text-white">Developed By: <a href="mailto:"></a></p>
         </div>
     </footer>

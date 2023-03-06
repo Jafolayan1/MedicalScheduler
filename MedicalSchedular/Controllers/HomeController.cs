@@ -5,6 +5,7 @@ using MedicalSchedular.Models;
 using MedicalScheduler.Models;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 using System.Diagnostics;
 
@@ -29,14 +30,14 @@ namespace MedicalSchedular.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(Patient model)
+        public IActionResult Index(Student model)
         {
             if (!ModelState.IsValid)
             {
                 _notyf.Error("Error Submitting");
                 return View();
             }
-            _context.Patients.Add(model);
+            _context.Students.Add(model);
             _context.SaveChanges();
             _notyf.Success("Appointment Booked Succesfully, Procced to print slip");
             return View(nameof(Schedule), model);
@@ -55,7 +56,7 @@ namespace MedicalSchedular.Controllers
             var matric = data["matric"].ToString();
             if (matric is not null)
             {
-                var sched = _context.Patients.FirstOrDefault(m => m.MatricNo == matric);
+                var sched = _context.Appointments.Include(p => p.Student).FirstOrDefault(m => m.Student.MatricNo == matric);
                 if (sched is null)
                 {
                     _notyf.Error("You do not have any appointment Procceed to submit appointment");
@@ -65,7 +66,7 @@ namespace MedicalSchedular.Controllers
             }
             else
             {
-                _notyf.Error("You do not have any appointment Procceed to submit appointment");
+                _notyf.Error("null, Input Matric No");
                 return View(nameof(Index));
             }
         }

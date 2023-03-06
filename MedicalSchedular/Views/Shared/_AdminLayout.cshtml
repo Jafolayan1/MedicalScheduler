@@ -85,16 +85,18 @@
     </style>
 
     <!-- jQuery -->
-    <script src="~/plugins/jquery/jquery.min.js"></script>
+    @*<script src="~/plugins/jquery/jquery.min.js"></script>*@
+    <script src="https://code.jquery.com/jquery-3.5.1.js" ></script>
+
     <!-- jQuery UI 1.11.4 -->
     <script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- SweetAlert2 -->
     <script src="~/plugins/sweetalert2/sweetalert2.min.js"></script>
     <!-- Toastr -->
     <script src="~/plugins/toastr/toastr.min.js"></script>
-    <!-- fullCalendar 2.2.5 -->
+   @* <!-- fullCalendar 2.2.5 -->
     <script src="~/plugins/moment/moment.min.js"></script>
-    <script src="~/plugins/fullcalendar/main.js"></script>
+    <script src="~/plugins/fullcalendar/main.js"></script>*@
     <script>
         var _base_url_ = '~/';
     </script>
@@ -125,7 +127,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="~/" class="nav-link">Patient Appointment Scheduler System - Admin</a>
+                    <a href="~/" class="nav-link">Student Appointment Scheduler System - Admin</a>
                 </li>
             </ul>
             <!-- Right navbar links -->
@@ -160,7 +162,7 @@
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" asp-controller="admin" asp-action="user"><span class="fa fa-user"></span> My Account</a>
+                            <a class="dropdown-item" asp-controller="admin" asp-action="settings"><span class="fa fa-user"></span> My Account</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="~/"><span class="fas fa-sign-out-alt"></span> Logout</a>
                         </div>
@@ -176,7 +178,7 @@
                  </li> -->
             </ul>
         </nav>
-        <!-- /.navbar -->    
+        <!-- /.navbar -->
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4 sidebar-no-expand">
             <!-- Brand Logo -->
@@ -218,16 +220,24 @@
                                         </a>
                                     </li>
 
-                                    <li class="nav-item dropdown">
-                                        <a  asp-controller="admin" asp-action="schedule" class="nav-link nav-schedule_settings">
+                                   @* <li class="nav-item dropdown">
+                                        <a asp-controller="admin" asp-action="schedule" class="nav-link nav-schedule_settings">
                                             <i class="nav-icon fas fa-calendar-day"></i>
                                             <p>
                                                 Schedule Settings
                                             </p>
                                         </a>
+                                    </li>*@
+                                     <li class="nav-item dropdown">
+                                        <a asp-controller="admin" asp-action="students" class="nav-link nav-user_list">
+                                            <i class="nav-icon fas fa-users"></i>
+                                            <p>
+                                                Students
+                                            </p>
+                                        </a>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a asp-controller="admin" asp-action="user" class="nav-link nav-user_list">
+                                        <a asp-controller="admin" asp-action="users" class="nav-link nav-user_list">
                                             <i class="nav-icon fas fa-users"></i>
                                             <p>
                                                 User List
@@ -235,7 +245,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a  asp-controller="admin" asp-action="settings" class="nav-link nav-system_info">
+                                        <a asp-controller="admin" asp-action="settings" class="nav-link nav-system_info">
                                             <i class="nav-icon fas fa-cogs"></i>
                                             <p>
                                                 Settings
@@ -285,7 +295,7 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper bg-dark pt-3" style="min-height: 567.854px;">
 
-           @RenderBody()
+            @RenderBody()
             <!-- /.content -->
             <div class="modal fade" id="confirm_modal" role='dialog'>
                 <div class="modal-dialog modal-md modal-dialog-centered" role="document">
@@ -342,7 +352,7 @@
             </div>
         </div>
         <!-- /.content-wrapper -->
-        <script>
+      @*  <script>
             $(document).ready(function () {
                 window.viewer_modal = function ($src = '') {
                     start_loader()
@@ -398,10 +408,10 @@
                     $('#confirm_modal').modal('show')
                 }
             })
-        </script>
+        </script>*@
         <footer class="main-footer text-sm">
             <strong>
-                Copyright © 2023.
+                Copyright © @DateTime.Now.Year
                 <!-- <a href=""></a> -->
             </strong>
             All rights reserved.
@@ -435,16 +445,18 @@
     <script src="~/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
     <!-- Summernote -->
     <script src="~/plugins/summernote/summernote-bs4.min.js"></script>
-    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="~/plugins/datatables-select/js/select.bootstrap4.min.js"></script>
+    @*<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>*@
+    @*<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>*@
+    @*<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>*@
+    @*<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>*@
+    @*<script src="~/plugins/datatables-select/js/select.bootstrap4.min.js"></script>*@
     <!-- overlayScrollbars -->
     <!-- <script src="~/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script> -->
     <!-- AdminLTE App -->
     <script src="~/dist/js/adminlte.js"></script>
-    <div class="daterangepicker ltr show-ranges opensright">
+    @await Component.InvokeAsync("Notyf")
+    @await RenderSectionAsync("Scripts", required: false)
+    @*<div class="daterangepicker ltr show-ranges opensright">
         <div class="ranges">
             <ul>
                 <li data-range-key="Today">Today</li>
@@ -465,7 +477,7 @@
             <div class="calendar-time" style="display: none;"></div>
         </div>
         <div class="drp-buttons"><span class="drp-selected"></span><button class="cancelBtn btn btn-sm btn-default" type="button">Cancel</button><button class="applyBtn btn btn-sm btn-primary" disabled="disabled" type="button">Apply</button> </div>
-    </div>
-    <div class="jqvmap-label" style="display: none; left: 1093.83px; top: 394.361px;">Idaho</div>
+    </div>*@
+    @*<div class="jqvmap-label" style="display: none; left: 1093.83px; top: 394.361px;">Idaho</div>*@
 </body>
 </html>

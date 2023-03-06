@@ -1,4 +1,4 @@
-﻿@model Patient
+﻿@model Appointment
 @{
     ViewData["Title"] = "View Schedule";
 }
@@ -9,7 +9,7 @@
     <div class="modal-dialog rounded-0 modal-md modal-dialog-centered mid-large" role="document">
         <div class="modal-content  rounded-0">
             <div class="modal-header">
-                <h5 class="modal-title">Appointment Form</h5>
+                <h5 class="modal-title text-center">Medical Appointment Schedule</h5>
             </div>
             <div class="modal-body">
                 <style>
@@ -24,22 +24,22 @@
                 <div class="container-fluid">
                         <div class="row" id="appointment">
 
-
-                            <h1>COME ALONG WITH A COPY OF YOUR SCHOOL FEES RECEIPT AND A COPY OF THIS APPOINMENT SCHEDULE.</h1>
-                            <div class="col-6" id="frm-field">
+                        <h1> <span class="text-danger text-center"> COME ALONG WITH A COPY OF YOUR SCHOOL FEES RECEIPT AND A COPY OF THIS APPOINMENT SCHEDULE.</span></h1>
+                        <div></div>
+                            <div class="col-12" id="frm-field">
                                 <div class="form-group">
-                                    <label for="matric" class="control-label">Matric No : @Model.MatricNo</label>
+                                <label for="matric" class="control-label">Matric No :   @Model.Student.MatricNo</label>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="matric" class="control-label">FullName : @Model.FullName</label>
+                                <label for="matric" class="control-label">FullName :    @Model.Student.FullName</label>
                                 </div>
                                 <div class="form-group">
-                                    <label for="matric" class="control-label">Email : @Model.Email</label>
+                                <label for="matric" class="control-label">Email :   @Model.Student.Email</label>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="matric" class="control-label">Level : @Model.Level</label>
+                                <label for="matric" class="control-label">Level :   @Model.Student.Level</label>
                                 </div>
 
                                 <div class="form-group">
@@ -49,17 +49,8 @@
                         </div>
 
                         <div class="form-group d-flex justify-content-end w-100 form-group">
-                            <button id="button" class="btn-primary btn">Download Schedule</button>
+                        <button id="button" class="btn-primary btn" onclick="window.print();return false;">>Download Schedule</button>
                         </div>
-                        <script src="html2pdf.bundle.min.js"></script>
-                        <script>
-                            const btn = document.getElementById("button");
-
-                            btn.addEventListener("click", function () {
-                                var element = document.getElementById('staticBack');
-                                html2pdf().from(element).save('filename.pdf');
-                            });
-                        </script>
                 </div>
             </div>
         </div>

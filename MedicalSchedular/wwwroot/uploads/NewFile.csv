@@ -1,0 +1,6 @@
+StudentId,FullName,MatricNo,Department,Email,Level,Contact,SchoolFee,AppointmentId,StudentId,Status,Date_Sched,DateCreated
+1,AFOLAYAN OLUWATOSIN J.,HC20200104529,Commputer Science,Jafolayan06@gmail.com,HND,9090087444,Paid,0,1,,,03/06/2023 14:08:52
+2,ADEOTI ELIJAH D.,ND20200100461,Commputer Science,Jafolayan06@gmail.com,ND,9090087444,Not_Paid,0,2,,,03/06/2023 14:08:52
+3,HUSSAIN BAYONLE,HC20200101104,Commputer Science,Jafolayan06@gmail.com,HND,9090087444,Paid,0,3,,,03/06/2023 14:08:52
+4,OJO TIMOTHY,ND20200103985,Commputer Science,Jafolayan06@gmail.com,ND,9090087444,Not_Paid,0,4,,,03/06/2023 14:08:52
+5,MICHEL LEWIS,HC20200106000,Commputer Science,Jafolayan06@gmail.com,HND,9090087444,Paid,0,5,,,03/06/2023 14:08:52
