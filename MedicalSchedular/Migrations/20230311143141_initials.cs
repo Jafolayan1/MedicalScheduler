@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MedicalScheduler.Migrations
 {
-    public partial class UpdateAppoitnment : Migration
+    public partial class initials : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -90,6 +90,8 @@ namespace MedicalScheduler.Migrations
                     Contact = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     SchoolFee = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Appointment = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -245,13 +247,12 @@ namespace MedicalScheduler.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LatsName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "fa7b2df3-1205-4209-bf0f-764aba3ea7b7", "admin@gmail.com", true, " Super", "Admin", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEA0RkCifskTbWz8HsVTEDKX0uTNsctbKHZcbh++F1ag5ZFnk/x9AJnjni0MtOzjXpg==", "1234567890", false, "0d504470-3bbd-48dc-b8f6-a5d327852f7d", false, "Admin" });
+                values: new object[] { 1, 0, "12f64ef3-76a4-4b4e-92c4-d470887c4b28", "admin@gmail.com", true, " Super", "Admin", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEMHMbA7rHnbTVXMJPNbAWFClsDYl57ypznVQSOhpDL3EI7FPQKBsWpJLPqI+1/VNNA==", "1234567890", false, "32e7067f-fff7-496a-a449-1e1096a59a35", false, "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_StudentId",
                 table: "Appointments",
-                column: "StudentId",
-                unique: true);
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

@@ -23,7 +23,6 @@ namespace MedicalSchedular.Controllers
             _context = context;
             _notyf = notyf;
         }
-
         public IActionResult Index()
         {
             return View();
@@ -52,17 +51,16 @@ namespace MedicalSchedular.Controllers
         [HttpPost]
         public IActionResult Schedule(IFormCollection data)
         {
-
             var matric = data["matric"].ToString();
             if (matric is not null)
             {
                 var sched = _context.Appointments.Include(p => p.Student).FirstOrDefault(m => m.Student.MatricNo == matric);
                 if (sched is null)
                 {
-                    _notyf.Error("You do not have any appointment Procceed to submit appointment");
+                    _notyf.Error("You do not have any appointment");
                     return View(nameof(Index));
                 }
-                return View(sched);
+                return View(nameof(Schedule), sched);
             }
             else
             {
@@ -73,6 +71,17 @@ namespace MedicalSchedular.Controllers
 
         public IActionResult Privacy()
         {
+            return View();
+        }
+
+        [Route("404")]
+        public IActionResult PageNotFound()
+        {
+            string originalPath = "unknown";
+            if (HttpContext.Items.ContainsKey("originalPath"))
+            {
+                originalPath = HttpContext.Items["originalPath"] as string;
+            }
             return View();
         }
 

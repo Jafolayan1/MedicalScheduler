@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicalScheduler.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230306134930_UpdateAppoitnment")]
-    partial class UpdateAppoitnment
+    [Migration("20230314185731_addedRoles")]
+    partial class addedRoles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,8 +42,7 @@ namespace MedicalScheduler.Migrations
 
                     b.HasKey("AppointmentId");
 
-                    b.HasIndex("StudentId")
-                        .IsUnique();
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Appointments");
                 });
@@ -73,6 +72,15 @@ namespace MedicalScheduler.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("MedicalSchedular.Models.Student", b =>
@@ -80,6 +88,10 @@ namespace MedicalScheduler.Migrations
                     b.Property<int>("StudentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("Appointment")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Contact")
                         .IsRequired()
@@ -185,27 +197,6 @@ namespace MedicalScheduler.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "fa7b2df3-1205-4209-bf0f-764aba3ea7b7",
-                            Email = "admin@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = " Super",
-                            LatsName = "Admin",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@GMAIL.COM",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEA0RkCifskTbWz8HsVTEDKX0uTNsctbKHZcbh++F1ag5ZFnk/x9AJnjni0MtOzjXpg==",
-                            PhoneNumber = "1234567890",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "0d504470-3bbd-48dc-b8f6-a5d327852f7d",
-                            TwoFactorEnabled = false,
-                            UserName = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -286,6 +277,13 @@ namespace MedicalScheduler.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -310,8 +308,8 @@ namespace MedicalScheduler.Migrations
             modelBuilder.Entity("MedicalSchedular.Models.Appointment", b =>
                 {
                     b.HasOne("MedicalSchedular.Models.Student", "Student")
-                        .WithOne("Appointment")
-                        .HasForeignKey("MedicalSchedular.Models.Appointment", "StudentId");
+                        .WithMany()
+                        .HasForeignKey("StudentId");
 
                     b.Navigation("Student");
                 });
@@ -364,12 +362,6 @@ namespace MedicalScheduler.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MedicalSchedular.Models.Student", b =>
-                {
-                    b.Navigation("Appointment")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

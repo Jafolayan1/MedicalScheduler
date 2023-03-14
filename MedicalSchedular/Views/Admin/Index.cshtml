@@ -1,34 +1,70 @@
 ﻿@{
-	ViewData["Title"] = "Index Page";
-	Layout = "_AdminLayout";
+    ViewData["Title"] = "Index Page";
+    Layout = "_AdminLayout";
+    var students = ViewData["Students"] as IEnumerable<Student>;
+    var appointment = ViewData["Appoint"] as IEnumerable<Appointment>;
 }
-	<!-- Main content -->
-	<section class="content  text-dark">
-		<div class="container-fluid">
-			<h1 class="text-light">Welcome to Student Appointment Scheduler System </h1>
-			<hr>
-			<div class="container">
-				<div class="card">
-					<div class="card-body">
-						<div id="calendar"></div>
-					</div>
-				</div>
-			</div>
-			<style>
-				.fc-event:hover, .fc-event-selected {
-					color: black !important;
-				}
 
-				a.fc-list-day-text {
-					color: black !important;
-				}
+<!-- Main content -->
+<section class="content  text-dark">
+    <div class="container-fluid">
+        <h1 class="text-light">Welcome to Student Appointment Scheduler System </h1>
+        <hr>
+        <div class="container">
+            <div class="card-columns">
+                <div class="card bg-warning">
+                    <div class="card-body text-center">
+                        <a style="color: inherit; text-decoration: none; cursor: pointer;" asp-controller="admin" asp-action="students">
+                        <i class="nav-icon fas fa-users fa-7x"></i>
+                        <p class="card-text">
+                            <em>  All Students @students.Count() </em>
+                        </p>
+                        </a>
+                    </div>
+                </div>
+                <div class="card bg-primary">
+                    <div class="card-body text-center">
+                        <a style="color: inherit; text-decoration: none; cursor: pointer;" asp-controller="admin" asp-action="appointment">
+                            <i class="nav-icon fas fa-calendar fa-7x"></i>
+                            <p class="card-text">
+                                <em> Scheduled Students @appointment.Count() </em>
+                            </p>
+                        </a>
+                    </div>
+                </div>
 
-				.fc-event:hover, .fc-event-selected {
-					color: black !important;
-					background: var(--light);
-					cursor: pointer;
-				}
-			</style>
-			
-		</div>
-	</section>
+                <div class="card bg-danger">
+                    <div class="card-body text-center">
+                        <a style="color: inherit; text-decoration: none; cursor: pointer;" asp-controller="admin" asp-action="students">
+
+                        <i class="nav-icon fas fa-users fa-7x"></i>
+                        <p class="card-text">
+                            <em>  Not Scheduled Students @students.Count(x=>x.Appointment == "Not_Scheduled") </em>
+                        </p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <style>
+            .fc-event:hover, .fc-event-selected {
+                color: black !important;
+            }
+
+            a.fc-list-day-text {
+                color: black !important;
+            }
+
+            .fc-event:hover, .fc-event-selected {
+                color: black !important;
+                background: var(--light);
+                cursor: pointer;
+            }
+        </style>
+
+    </div>
+</section>

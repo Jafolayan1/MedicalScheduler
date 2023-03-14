@@ -6,7 +6,7 @@ function end_loader(){
 		$('#preloader').remove();
       })
 }
-// function 
+// function
 window.alert_toast= function($msg = 'TEST',$bg = 'success' ,$pos=''){
 	   	 var Toast = Swal.mixin({
 	      toast: true,
@@ -33,7 +33,6 @@ $(document).ready(function(){
 			data:$(this).serialize(),
 			error:err=>{
 				console.log(err)
-
 			},
 			success:function(resp){
 				if(resp){
@@ -64,7 +63,6 @@ $(document).ready(function(){
 			data:$(this).serialize(),
 			error:err=>{
 				console.log(err)
-
 			},
 			success:function(resp){
 				if(resp){
@@ -96,7 +94,6 @@ $(document).ready(function(){
 			data:$(this).serialize(),
 			error:err=>{
 				console.log(err)
-
 			},
 			success:function(resp){
 				if(resp){

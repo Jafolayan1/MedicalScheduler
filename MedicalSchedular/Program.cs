@@ -18,11 +18,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
-
 builder.Services.AddTransient<IMailService, MailService>();
 builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
-
 
 builder.Services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -41,7 +39,6 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
 
-
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -53,6 +50,15 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+app.Use(async (context, next) =>
+{
+    await next();
+    if (context.Response.StatusCode == 404)
+    {
+        context.Request.Path = "/Home";
+        await next();
+    }
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

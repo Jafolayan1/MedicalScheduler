@@ -8,14 +8,17 @@ using MedicalSchedular.Models;
 using MedicalScheduler.Models;
 using MedicalScheduler.Service;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+using System.Data;
 using System.Globalization;
 
 namespace MedicalScheduler.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         protected static List<Student> _studentAccounts = new();
@@ -25,6 +28,7 @@ namespace MedicalScheduler.Controllers
         private readonly INotyfService _notyf;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+
         public AdminController(SignInManager<User> signInManager, UserManager<User> userManager, INotyfService notyf, ApplicationDbContext dbContext, IMailService mail, IFileService file)
         {
             _signInManager = signInManager;
@@ -73,9 +77,8 @@ namespace MedicalScheduler.Controllers
             return View();
         }
 
-
         [HttpPost]
-        public ActionResult Create(SignUp model, IFormCollection collection)
+        public async Task<ActionResult> Create(SignUp model, IFormCollection collection)
         {
             try
             {
@@ -91,14 +94,15 @@ namespace MedicalScheduler.Controllers
                 var request = _userManager.CreateAsync(user, model.Password).Result;
                 if (request.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "Admin");
                     return RedirectToAction(nameof(Index));
                 }
                 else
                 {
+                    await _userManager.DeleteAsync(user);
                     _notyf.Error("Error Occured, Try again");
                     return View(nameof(Users));
                 }
-
             }
             catch
             {
@@ -115,7 +119,6 @@ namespace MedicalScheduler.Controllers
             return RedirectToAction(nameof(Users));
         }
 
-
         [HttpPost]
         public async Task<ActionResult> Edit(User model)
         {
@@ -130,14 +133,21 @@ namespace MedicalScheduler.Controllers
             return RedirectToAction(nameof(Users));
         }
 
-
-
         [Route("/index")]
         public ActionResult Index()
         {
+            var students = _dbContext.Students.ToList();
+            var appointments = _dbContext.Appointments.ToList();
+
+
+            ViewData["Students"] = students;
+            ViewData["Appoint"] = appointments;
+
+            //var appointments = _dbContext.Students.FromSqlRaw("SELECT * FROM Appointments WHERE A ).Take(number).ToList();
+
             return View();
         }
-
+        [AllowAnonymous]
         [Route("/auth")]
         [HttpGet]
         public IActionResult Login()
@@ -178,6 +188,7 @@ namespace MedicalScheduler.Controllers
             if (studentId > 0)
             {
                 var student = _dbContext.Students.FirstOrDefault(x => x.StudentId == studentId);
+                student.Appointment = "Scheduled";
                 var appointment = _dbContext.Appointments.Where(x => x.Student.MatricNo == student.MatricNo);
 
                 Appointment appoint = new()
@@ -188,8 +199,10 @@ namespace MedicalScheduler.Controllers
                     Date_Sched = GenerateRandomDate(),
                     DateCreated = DateTime.Now
                 };
+
                 _dbContext.Appointments.RemoveRange(appointment);
                 _dbContext.Appointments.Add(appoint);
+                _dbContext.Students.Update(student);
                 await _dbContext.SaveChangesAsync();
                 SendMail($"<p>You have been rescheduled for your medical on the {appoint.Date_Sched}</p> <br>" +
                     $"<p> Come along with a copy of your school fee recipt and your medical appointment schedule  <a href='http://gabrielgeestar-001-site1.atempurl.com/'>HERE</a>", student.Email);
@@ -209,31 +222,44 @@ namespace MedicalScheduler.Controllers
                 {
                     _notyf.Error($"Error, No of students cannot be less than 0");
                     return View(nameof(Appointment));
-
-
                 }
-                if (model.Date_Sched.HasValue && model.Date_Sched.Value.Hour < 14)
+
+                if (model.Date_Sched.HasValue && model.Date_Sched.Value.DayOfWeek == DayOfWeek.Saturday || model.Date_Sched.Value.DayOfWeek == DayOfWeek.Sunday)
                 {
-                    _notyf.Error($"Error, Time should be between 8AM and 3PM");
+                    _notyf.Error($"Error, This date is a weekend day.");
                     return View(nameof(Appointment));
-
                 }
 
+                if (model.Date_Sched < DateTime.Now)
+                {
+                    _notyf.Error($"Error, Date cannot be less than today");
+                    return View(nameof(Appointment));
+                }
 
-                var paidStudents = _dbContext.Students.FromSqlRaw("SELECT * FROM Students WHERE SchoolFee = {0}", "Paid").Take(number).ToList();
+                if (model.Date_Sched.HasValue && model.Date_Sched.Value.Hour > 12)
+                {
+                    _notyf.Error($"Error, Scheduled Time should be AM");
+                    return View(nameof(Appointment));
+                }
+
+                var paidStudents = _dbContext.Students.FromSqlRaw("SELECT * FROM Students WHERE SchoolFee = {0} AND Appointment = {1}", "Paid", "Not_Scheduled").OrderBy(x => Guid.NewGuid()).Take(number).ToList();
                 var appointment = new List<Appointment> { };
                 foreach (var item in paidStudents)
                 {
                     var student = _dbContext.Students.FirstOrDefault(x => x.StudentId == item.StudentId);
+                    student.Appointment = "Scheduled";
+                    //_dbContext.Students.("SELECT * FROM Appointments").ToList();
+
                     Appointment appointment1 = new()
                     {
                         Student = student,
                         Status = "Scheduled",
                         Date_Sched = model.Date_Sched,
-                        DateCreated = DateTime.Now
+                        DateCreated = DateTime.Now,
                     };
                     appointment.Add(appointment1);
                 }
+                var allAppintments = _dbContext.Appointments.FromSqlRaw("SELECT * FROM Appointments").ToList();
 
                 _dbContext.Appointments.AddRange(appointment);
                 await _dbContext.SaveChangesAsync();
@@ -246,11 +272,9 @@ namespace MedicalScheduler.Controllers
             }
             catch (Exception)
             {
-
                 _notyf.Error($"Error, failed to schedule appointment");
                 return View(nameof(Appointment));
             }
-
         }
 
         [Route("/settings")]
@@ -270,7 +294,7 @@ namespace MedicalScheduler.Controllers
         [HttpGet]
         public IActionResult Students()
         {
-            var students = _dbContext.Students.Include(x => x.Appointment).ToList();
+            var students = _dbContext.Students.ToList();
             var appointment = _dbContext.Appointments.Include(x => x.Student).ToList();
             ViewData["appointment"] = appointment;
 
@@ -288,7 +312,7 @@ namespace MedicalScheduler.Controllers
                     var request = _dbContext.Students.Where(x => x.MatricNo == item.MatricNo);
                     if (!request.Any())
                     {
-                        students.Add(new Student { FullName = item.FullName, Department = item.Department, Contact = item.Contact, Email = item.Email, SchoolFee = item.SchoolFee, Level = item.Level, MatricNo = item.MatricNo });
+                        students.Add(new Student { FullName = item.FullName, Department = item.Department, Contact = item.Contact, Email = item.Email, SchoolFee = item.SchoolFee, Level = item.Level, Appointment = item.Appointment, MatricNo = item.MatricNo });
                     }
                     else
                     {
@@ -305,7 +329,6 @@ namespace MedicalScheduler.Controllers
                 TempData["Error"] = "One or more error occured.";
                 return RedirectToAction(nameof(Students));
             }
-
         }
 
         [Route("/users")]
@@ -366,37 +389,123 @@ namespace MedicalScheduler.Controllers
             await _mail.SendEmailAsync(email, email.Body);
         }
 
-
         public DateTime GenerateRandomDate()
         {
             Random rnd = new();
-            // Define a start and end date
             DateTime startDate = DateTime.Now;
             DateTime endDate = DateTime.Now.AddDays(5);
 
-            // Calculate the number of days between the start and end date
             int totalDays = (int)(endDate - startDate).TotalDays;
 
-            // Loop until a non-weekend date is generated
             DateTime randomDate;
             do
             {
-                // Generate a random number of days between the start and end date
                 int randomDays = rnd.Next(totalDays);
 
-                // Add the random number of days to the start date
                 randomDate = startDate.AddDays(randomDays);
-
             } while (randomDate.DayOfWeek == DayOfWeek.Saturday || randomDate.DayOfWeek == DayOfWeek.Sunday);
 
-            // Generate a random time
-            int randomHour = rnd.Next(8, 14);
+            int randomHour = rnd.Next(12);
             int randomMinute = rnd.Next(0, 60);
             int randomSecond = rnd.Next(0, 60);
 
-            // Combine the random date and time
-            DateTime randomDateTime = new DateTime(randomDate.Year, randomDate.Month, randomDate.Day, randomHour, randomMinute, randomSecond);
+            DateTime randomDateTime = new(randomDate.Year, randomDate.Month, randomDate.Day, randomHour, randomMinute, randomSecond);
             return randomDateTime;
+        }
+
+        [AllowAnonymous]
+
+        [Route("forgotpass")]
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [Route("reset")]
+        [HttpGet]
+        public IActionResult ResetPassword(string token, string email)
+        {
+            var model = new ResetPassword { Token = token, Email = email };
+            return View(model);
+        }
+
+
+        [AllowAnonymous]
+        [Route("forgotpass")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPassword model, MailRequest request)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                {
+                    return RedirectToAction(nameof(ForgotPasswordConfirmation));
+                }
+
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = Url.Action("ResetPassword", "Admin",
+                    new { email = user.Email, token }, protocol: HttpContext.Request.Scheme);
+
+                request.ToEmail = model.Email;
+                request.Subject = "Reset Password Token";
+                await _mail.SendEmailAsync(request, $"<a href='{callbackUrl}'>Click this link to reset your paswword,<br>");
+
+                return RedirectToAction(nameof(ForgotPasswordConfirmation));
+            }
+            catch
+            {
+                ModelState.AddModelError("", "One or more errors occurred.");
+                return RedirectToAction(nameof(Login));
+            }
+        }
+
+
+        [AllowAnonymous]
+
+        [Route("forgotconfirmation")]
+        public IActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
+
+        [AllowAnonymous]
+
+        [Route("resetconfirm")]
+        public IActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
+
+
+        [AllowAnonymous]
+
+        [Route("reset")]
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPassword model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+                RedirectToAction(nameof(ResetPasswordConfirmation));
+
+            var resetPassResult = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+            if (!resetPassResult.Succeeded)
+            {
+                foreach (var error in resetPassResult.Errors)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+
+                return View();
+            }
+            return RedirectToAction(nameof(ResetPasswordConfirmation));
         }
     }
 }

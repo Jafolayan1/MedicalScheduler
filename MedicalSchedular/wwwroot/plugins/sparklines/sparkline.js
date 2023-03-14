@@ -113,7 +113,6 @@
   }
 
   Sparkline.prototype.draw = function (points) {
-
     points = points || [];
     this.points = points;
 

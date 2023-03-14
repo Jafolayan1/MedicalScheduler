@@ -54,7 +54,6 @@
                                     <th>Email</th>
                                     <th>Level</th>
                                     <th>Contact</th>
-                                    <th>SchoolFee</th>
                                     <th>Appointment</th>
                                     <th>Action</th>
                                 </tr>
@@ -64,23 +63,28 @@
                                 {
                                     <tr>
                                         <td>@item.StudentId</td>
-                                        <td>@item.FullName</td>
                                         <td><p class="m-0 truncate-1">@item.MatricNo</p></td>
+                                        <td>@item.FullName</td>
                                         <td>@item.Department</td>
                                         <td>@item.Email</td>
                                         <td>@item.Level</td>
                                         <td>@item.Contact</td>
-                                        <td>@item.SchoolFee</td>
-                                        @if (@item.Appointment != null && item.Appointment.Status == "Scheduled")
+                                        @if (@item.Appointment == "Scheduled")
                                         {
                                             <td class="text-center">
-                                                <span class="badge badge-success">@item.Appointment.Status</span>
+                                                <span class="badge badge-success">@item.Appointment</span>
+                                            </td>
+                                        }
+                                        else if (@item.Appointment == "Not_Scheduled")
+                                        {
+                                            <td class="text-center">
+                                                <span class="badge badge-primary">@item.Appointment</span>
                                             </td>
                                         }
                                         else
                                         {
                                             <td class="text-center">
-                                                <span class="badge badge-primary">Not_Scheduled</span>
+                                                <span class="badge badge-danger">---</span>
                                             </td>
                                         }
                                         <td align="center">
@@ -133,7 +137,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" onclick="start_loader();" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
@@ -146,10 +150,20 @@
     $(document).ready(function () {
         $('#example').DataTable({
             dom: 'B<"clear">lfrtip',
-            buttons: ['pdf', 'excel']
+            buttons: [
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: ':not(:eq(8))'
+                    }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: ':not(:eq(8))'
+                    }
+                }
+            ]
         });
     });
 </script>
-@*let table = new DataTable('#myTable', {
-    // options
-});*@

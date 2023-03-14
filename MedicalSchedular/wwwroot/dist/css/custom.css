@@ -31,10 +31,12 @@
         width: 100% !important;
         max-width: unset;
     }
+
     .modal-dialog.mid-large {
         width: 100% !important;
         max-width: unset;
     }
+
     .modal-dialog {
         margin: unset !important;
     }
@@ -82,29 +84,29 @@ table.dataTable td {
     flex-direction: row !important;
 }
 
-.card.d-flex>img {
-    width: 20% !important;
-}
+    .card.d-flex > img {
+        width: 20% !important;
+    }
 
-.card.d-flex>.card-body {
-    width: 80% !important;
-}
+    .card.d-flex > .card-body {
+        width: 80% !important;
+    }
 
 span.btn {
     cursor: unset;
 }
 
-span.btn:hover {
-    background: inherit;
-}
+    span.btn:hover {
+        background: inherit;
+    }
 
 #tourCarousel {
     height: 50vh !important;
 }
 
-#tourCarousel img {
-    object-fit: fill;
-}
+    #tourCarousel img {
+        object-fit: fill;
+    }
 
 div.stars {
     width: auto;
@@ -127,18 +129,18 @@ label.star {
     transition: all .2s
 }
 
-input.star:checked~label.star:before {
+input.star:checked ~ label.star:before {
     content: '\2605';
     color: #ffc800;
     transition: all .25s
 }
 
-input.star-5:checked~label.star:before {
+input.star-5:checked ~ label.star:before {
     color: #ffc800;
     /* text-shadow: 0 0 20px #952 */
 }
 
-input.star-1:checked~label.star:before {
+input.star-1:checked ~ label.star:before {
     color: #F62
 }
 
