@@ -69,6 +69,14 @@ namespace MedicalSchedular.Controllers
             }
         }
 
+
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), b => b.EnableRetryOnFailure());
 });
 
 builder.Services.AddTransient<IMailService, MailService>();
@@ -25,6 +25,18 @@ builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailS
 builder.Services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    // Cookie settings  
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+    options.LoginPath = "/Admin/Login";
+    options.ReturnUrlParameter = "/Admin/Login";
+    options.AccessDeniedPath = "/Admin/AccessDenied";
+    options.SlidingExpiration = true;
+});
 
 builder.Services.Configure<IdentityOptions>(options =>
 {

@@ -155,6 +155,7 @@ namespace MedicalScheduler.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [Route("/auth")]
         [HttpPost]
         public ActionResult Login(SignUp model)
@@ -242,13 +243,14 @@ namespace MedicalScheduler.Controllers
                     return View(nameof(Appointment));
                 }
 
-                var paidStudents = _dbContext.Students.FromSqlRaw("SELECT * FROM Students WHERE SchoolFee = {0} AND Appointment = {1}", "Paid", "Not_Scheduled").OrderBy(x => Guid.NewGuid()).Take(number).ToList();
+                var rand = new Random();
+                //= _dbContext.Students.FromSqlRaw("SELECT * FROM Students WHERE SchoolFee = {0} AND Appointment = {1}", "Paid", "Not_Scheduled").OrderBy(x => Guid.NewGuid().ToString()).Take(number).ToList();
+
+                var paidStudents = _dbContext.Students.Where(x => x.SchoolFee == "Paid" && x.Appointment == "Not_Scheduled").OrderBy(x => x.MatricNo).Take(number).ToList();
                 var appointment = new List<Appointment> { };
                 foreach (var item in paidStudents)
                 {
                     var student = _dbContext.Students.FirstOrDefault(x => x.StudentId == item.StudentId);
-                    student.Appointment = "Scheduled";
-                    //_dbContext.Students.("SELECT * FROM Appointments").ToList();
 
                     Appointment appointment1 = new()
                     {
@@ -259,9 +261,15 @@ namespace MedicalScheduler.Controllers
                     };
                     appointment.Add(appointment1);
                 }
-                var allAppintments = _dbContext.Appointments.FromSqlRaw("SELECT * FROM Appointments").ToList();
+                //var allAppintments = _dbContext.Appointments.FromSqlRaw("SELECT * FROM Appointments").ToList();
 
                 _dbContext.Appointments.AddRange(appointment);
+                foreach (var item in appointment)
+                {
+                    var student = _dbContext.Students.FirstOrDefault(x => x.StudentId == item.Student.StudentId);
+                    student.Appointment = "Scheduled";
+                    _dbContext.SaveChanges();
+                }
                 await _dbContext.SaveChangesAsync();
                 foreach (var item in appointment)
                 {
@@ -421,6 +429,8 @@ namespace MedicalScheduler.Controllers
         {
             return View();
         }
+
+
 
         [AllowAnonymous]
         [Route("reset")]

@@ -14,9 +14,9 @@ namespace MedicalScheduler.Models
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //SeedUsers(builder);
             //SeedPatients(builder);
 
+            SeedUsers(builder);
             SeedRoles(builder);
             SeedUserRoles(builder);
             base.OnModelCreating(builder);
@@ -46,7 +46,6 @@ namespace MedicalScheduler.Models
 
             builder.Entity<User>().HasData(admin);
         }
-
 
         private static void SeedRoles(ModelBuilder builder)
         {

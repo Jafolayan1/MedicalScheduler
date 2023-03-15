@@ -195,6 +195,27 @@ namespace MedicalScheduler.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3a644b54-614a-41d3-b199-38dc1d661c63",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = " Super",
+                            LatsName = "Admin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAH5BuIMBqc+7CySLtl39qeF2qmv0DvnW7Mzs+TV/x9qE0lLUo5bwKPZgHT8AKqlmA==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "375a1780-4922-4c25-9e64-ded5238fbb5a",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

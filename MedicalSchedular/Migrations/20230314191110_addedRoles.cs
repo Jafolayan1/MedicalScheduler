@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MedicalScheduler.Migrations
 {
-    public partial class initials : Migration
+    public partial class addedRoles : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -245,9 +245,19 @@ namespace MedicalScheduler.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { 1, "00000000-0000-0000-0000-000000000000", "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LatsName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "12f64ef3-76a4-4b4e-92c4-d470887c4b28", "admin@gmail.com", true, " Super", "Admin", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEMHMbA7rHnbTVXMJPNbAWFClsDYl57ypznVQSOhpDL3EI7FPQKBsWpJLPqI+1/VNNA==", "1234567890", false, "32e7067f-fff7-496a-a449-1e1096a59a35", false, "Admin" });
+                values: new object[] { 1, 0, "3a644b54-614a-41d3-b199-38dc1d661c63", "admin@gmail.com", true, " Super", "Admin", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEAH5BuIMBqc+7CySLtl39qeF2qmv0DvnW7Mzs+TV/x9qE0lLUo5bwKPZgHT8AKqlmA==", "1234567890", false, "375a1780-4922-4c25-9e64-ded5238fbb5a", false, "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { 1, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_StudentId",
