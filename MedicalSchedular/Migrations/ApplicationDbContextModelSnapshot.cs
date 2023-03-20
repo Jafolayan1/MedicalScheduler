@@ -201,7 +201,7 @@ namespace MedicalScheduler.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3a644b54-614a-41d3-b199-38dc1d661c63",
+                            ConcurrencyStamp = "4f5447b6-98b4-481f-b93b-9262a55cca4d",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = " Super",
@@ -209,10 +209,10 @@ namespace MedicalScheduler.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAH5BuIMBqc+7CySLtl39qeF2qmv0DvnW7Mzs+TV/x9qE0lLUo5bwKPZgHT8AKqlmA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOipkYjSjReS/5DxT4vPjhPnKK1caCy9+k7Y2HNnwWji8K9lYmuwQvxo/PvaOO7uGQ==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "375a1780-4922-4c25-9e64-ded5238fbb5a",
+                            SecurityStamp = "c9ef0fde-0057-4aed-8a3e-8a9ecc682daa",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MedicalScheduler.Migrations
 {
-    public partial class addedRoles : Migration
+    public partial class migrate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -252,7 +252,7 @@ namespace MedicalScheduler.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LatsName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "3a644b54-614a-41d3-b199-38dc1d661c63", "admin@gmail.com", true, " Super", "Admin", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEAH5BuIMBqc+7CySLtl39qeF2qmv0DvnW7Mzs+TV/x9qE0lLUo5bwKPZgHT8AKqlmA==", "1234567890", false, "375a1780-4922-4c25-9e64-ded5238fbb5a", false, "Admin" });
+                values: new object[] { 1, 0, "4f5447b6-98b4-481f-b93b-9262a55cca4d", "admin@gmail.com", true, " Super", "Admin", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEOipkYjSjReS/5DxT4vPjhPnKK1caCy9+k7Y2HNnwWji8K9lYmuwQvxo/PvaOO7uGQ==", "1234567890", false, "c9ef0fde-0057-4aed-8a3e-8a9ecc682daa", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

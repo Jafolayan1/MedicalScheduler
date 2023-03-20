@@ -14,8 +14,6 @@ namespace MedicalScheduler.Models
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //SeedPatients(builder);
-
             SeedUsers(builder);
             SeedRoles(builder);
             SeedUserRoles(builder);

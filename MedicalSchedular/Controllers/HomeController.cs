@@ -29,17 +29,34 @@ namespace MedicalSchedular.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(Student model)
+        public IActionResult Index(IFormCollection data)
         {
-            if (!ModelState.IsValid)
+            var matric = data["matric"].ToString();
+            if (matric is not null)
             {
-                _notyf.Error("Error Submitting");
-                return View();
+                var sched = _context.Appointments.Include(p => p.Student).FirstOrDefault(m => m.Student.MatricNo == matric);
+                if (sched is null)
+                {
+                    _notyf.Error("You do not have any appointment");
+                    return View(nameof(Index));
+                }
+                return View(nameof(Schedule), sched);
             }
-            _context.Students.Add(model);
-            _context.SaveChanges();
-            _notyf.Success("Appointment Booked Succesfully, Procced to print slip");
-            return View(nameof(Schedule), model);
+            else
+            {
+                _notyf.Error("null, Input Matric No");
+                return View(nameof(Index));
+            }
+
+            //if (!ModelState.IsValid)
+            //{
+            //    _notyf.Error("Error Submitting");
+            //    return View();
+            //}
+            //_context.Students.Add(model);
+            //_context.SaveChanges();
+            //_notyf.Success("Appointment Booked Succesfully, Procced to print slip");
+            //return View(nameof(Schedule), model);
         }
 
         [HttpGet]
