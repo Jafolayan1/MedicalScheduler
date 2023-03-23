@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace MedicalScheduler.Controllers
@@ -290,6 +291,56 @@ namespace MedicalScheduler.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Mail()
+        {
+            ViewBag.students = _dbContext.Students.ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Mail([MaybeNull] IFormCollection data)
+        {
+            string? subject = data["subject"].ToString();
+            string? toemail = data["email"].ToString();
+            string? message = data["message"].ToString();
+            var email = new MailRequest()
+            {
+                ToEmail = toemail,
+                Subject = subject,
+                Body = message
+            };
+            await _mail.SendEmailAsync(email, email.Body);
+            _notyf.Success("Mail send Successful");
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Emailp(string email, int id)
+        {
+            @ViewBag.email = email;
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> Emailp([MaybeNull] IFormCollection data)
+        {
+            string? subject = data["subject"].ToString();
+            string? toemail = data["email"].ToString();
+            string? message = data["message"].ToString();
+            var email = new MailRequest()
+            {
+                ToEmail = toemail,
+                Subject = subject,
+                Body = message
+            };
+            await _mail.SendEmailAsync(email, email.Body);
+            _notyf.Success("Mail send Successful");
+            return View();
+        }
+
 
         [Route("/signup")]
         [HttpGet]

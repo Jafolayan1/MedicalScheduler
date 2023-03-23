@@ -95,6 +95,8 @@
                                             <div class="dropdown-menu" role="menu">
                                                 <a class="dropdown-item schedule_data" onclick="start_loader();" asp-controller="admin" asp-action="schedule" asp-route-studentId="@item.StudentId"><span class="fa fa-calendar text-secondary"></span> Schedule</a>
                                                 <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item schedule_data" onclick="start_loader();" asp-controller="admin" asp-action="emailp" asp-route-id="@item.StudentId" asp-route-email="@item.Email"><span class="fa fa-envelope-o"></span> Send Mail</a>
+                                                @*<div class="dropdown-divider"></div>
                                                 @*<a class="dropdown-item view_data" onclick="start_loader();" data-id="@item.StudentId"><span class="fa fa-edit text-primary"></span> Edit</a>*@
                                                 @*<a class="dropdown-item delete_data" onclick="start_loader();" href="javascript:void(0)" data-id="@item.StudentId"><span class="fa fa-trash text-danger"></span> Delete</a>*@
                                             </div>

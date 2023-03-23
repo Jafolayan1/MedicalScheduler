@@ -16,6 +16,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Remove="Views\Admin\Mail2.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
 		<PackageReference Include="CsvHelper" Version="30.0.1" />
 		<PackageReference Include="MailKit" Version="3.5.0" />
@@ -36,6 +40,10 @@
 
 	<ItemGroup>
 	  <Folder Include="Properties\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Views\Admin\Mail2.cshtml" />
 	</ItemGroup>
 
 </Project>

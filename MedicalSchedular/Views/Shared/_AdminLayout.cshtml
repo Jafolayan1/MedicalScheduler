@@ -211,6 +211,14 @@
                                         </a>
                                     </li>
                                     <li class="nav-item dropdown">
+                                        <a asp-controller="admin" asp-action="mail" class="nav-link nav-system_info">
+                                            <i class="nav-icon fas fa-cogs"></i>
+                                            <p>
+                                                Send E-Mail
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown">
                                         <a asp-controller="admin" asp-action="settings" class="nav-link nav-system_info">
                                             <i class="nav-icon fas fa-cogs"></i>
                                             <p>
@@ -238,26 +246,7 @@
             </div>
             <!-- /.sidebar -->
         </aside>
-        <script>
-        //    $(document).ready(function () {
-        //        var page = 'home';
-        //        var s = '';
-        //        page = page.replace(/\//g, '_');
-
-        //        if ($('.nav-link.nav-' + page).length > 0) {
-        //            $('.nav-link.nav-' + page).addClass('active')
-        //            if ($('.nav-link.nav-' + page).hasClass('tree-item') == true) {
-        //                $('.nav-link.nav-' + page).closest('.nav-treeview').siblings('a').addClass('active')
-        //                $('.nav-link.nav-' + page).closest('.nav-treeview').parent().addClass('menu-open')
-        //            }
-        //            if ($('.nav-link.nav-' + page).hasClass('nav-is-tree') == true) {
-        //                $('.nav-link.nav-' + page).parent().addClass('menu-open')
-        //            }
-
-        //        }
-
-        //    })
-        //</script>
+        
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper bg-dark pt-3" style="min-height: 567.854px;">
 
